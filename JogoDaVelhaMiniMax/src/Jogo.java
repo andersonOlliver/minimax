@@ -34,7 +34,12 @@ public class Jogo {
             } while (linha < 0 || linha > 2);
 
             System.out.printf("Coluna [0 - %d]: ", (TAMANHO - 1));
-            coluna = entrada.nextInt();
+            do {
+                coluna = entrada.nextInt();
+                if (coluna < 0 || coluna > 2) {
+                    System.out.println("Valor inválido");
+                }
+            } while (coluna < 0 || coluna > 2);
 
             tabuleiro.fazerJogada(linha, coluna);
             tabuleiro.imprimir();
