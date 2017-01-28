@@ -1,0 +1,2 @@
+# minimax
+Algoritmo de MiniMax
