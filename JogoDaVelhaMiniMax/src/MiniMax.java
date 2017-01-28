@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class MiniMax {
 
-    static ArrayList<Sucessor> sucessores = new ArrayList();
+    static List<Sucessor> sucessores = new ArrayList();
     int tamanho, maxProf;
 
     public MiniMax(int tamanho, int maxProf) {
@@ -28,7 +28,7 @@ public class MiniMax {
     public int[][] decisaoMiniMax(int[][] tabuleiro) {
         sucessores.clear();
 
-        int v = valorMaximo(tabuleiro, true, 1);
+        int v = valorMaximo(tabuleiro, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 
         for (Sucessor s : sucessores) {
             if (s.utilidade == v) {
@@ -38,35 +38,50 @@ public class MiniMax {
         return tabuleiro;
     }
 
-    public int valorMaximo(int[][] tabuleiro, boolean primeiro, int profundidade) {
+    public int valorMaximo(int[][] tabuleiro, int alfa, int beta, boolean primeiro) {
 
-        if (profundidade++ > maxProf || testeTerminal(tabuleiro)) {
+        if (testeTerminal(tabuleiro)) {
             return utilidade(tabuleiro);
         }
 
         int v = Integer.MIN_VALUE;
 
+        // Percorre sucessores de MAX
         for (Sucessor s : gerarSucessores(tabuleiro, 1)) {
-            v = Math.max(v, valorMin(s.tabuleiro, profundidade));
+            v = Math.max(v, valorMin(s.tabuleiro, alfa, beta));
             s.utilidade = v;
 
+//            Se forem os primeiros serão adicionados a lista de sucessores
             if (primeiro) {
                 sucessores.add(s);
             }
+
+            if (v >= beta) {
+                return v;
+            }
+
+            alfa = Math.max(alfa, v);
         }
         return v;
     }
 
-    public int valorMin(int[][] tabuleiro, int profundidade) {
-        if (profundidade++ > maxProf || testeTerminal(tabuleiro)) {
+    public int valorMin(int[][] tabuleiro, int alfa, int beta) {
+        if (testeTerminal(tabuleiro)) {
             return utilidade(tabuleiro);
         }
 
         int v = Integer.MAX_VALUE;
 
         for (Sucessor s : gerarSucessores(tabuleiro, -1)) {
-            v = Math.min(v, valorMaximo(s.tabuleiro, false, profundidade));
+            v = Math.min(v, valorMaximo(s.tabuleiro, alfa, beta, false));
             s.utilidade = v;
+
+//            Caso menor que alfa retorna o valor
+            if (v <= alfa) {
+                return v;
+            }
+            
+            beta = Math.min(beta, v);
         }
 
         return v;

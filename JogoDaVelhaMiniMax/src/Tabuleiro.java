@@ -21,9 +21,9 @@ public class Tabuleiro {
         divisor = gerarDivisor();
     }
 
-    public void fazerJogada(int l, int c) {
-        if (tabuleiro[l][c] == 0) {
-            tabuleiro[l][c] = -1;
+    public void fazerJogada(int linha, int coluna) {
+        if (tabuleiro[linha][coluna] == 0) {
+            tabuleiro[linha][coluna] = -1;
         } else {
             System.out.println("Posição já ocupada, perdeu a vez!");
         }

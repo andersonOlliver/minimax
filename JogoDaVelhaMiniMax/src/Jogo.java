@@ -25,7 +25,7 @@ public class Jogo {
         tabuleiro.imprimir();
         do {
             int linha, coluna;
-            System.out.printf("Sua vez seu lixo\r\nLinha [0 - %d]: ", (TAMANHO - 1));
+            System.out.printf("Sua vez\r\nLinha [0 - %d]: ", (TAMANHO - 1));
             do {
                 linha = entrada.nextInt();
                 if (linha > 2 || linha < 0) {
